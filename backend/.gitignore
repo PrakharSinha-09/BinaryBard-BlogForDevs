@@ -1,8 +1,10 @@
 node_modules
 dist
+.env
 .wrangler
 .dev.vars
 
+wrangler.toml
 # Change them to your taste:
 package-lock.json
 yarn.lock
