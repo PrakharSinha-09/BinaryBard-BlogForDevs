@@ -1,0 +1,1 @@
+export const BACKEND_URL="https://backend.prakhar-sinha2k2.workers.dev"
