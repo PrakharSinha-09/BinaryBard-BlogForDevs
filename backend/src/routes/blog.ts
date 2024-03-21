@@ -43,6 +43,36 @@ blogRouter.get('/bulk',async(c)=>{
   }
 })
 
+//fetching single blog for detailed view
+blogRouter.get('/:id',async(c)=>{
+  const blogId=c.req.param("id")
+  const prisma = new PrismaClient({           //this from line 19-21, we have to write in every routes, because we cannot access the env variables from outside.. as everything we get is from this 'c' variable only.
+    datasourceUrl: c.env?.DATABASE_URL,        
+  }).$extends(withAccelerate())
+
+  const blog=await prisma.post.findFirst({
+    where:{
+      id:blogId
+    },
+    select:{
+      author: { select: { name: true } },
+      title: true,
+      content: true,
+      published: true,
+      createdAt: true,
+      id:true
+    }
+  })
+  
+  if(!blog){
+      return c.json({
+          error:"Error Fetching"
+      })
+  }
+  return c.json({
+    result:blog
+  })
+})
 
 blogRouter.use('/*',async(c,next)=>{
     const token=c.req.header("authorization") || ""
@@ -97,7 +127,8 @@ blogRouter.post('/new',async (c) => {
       });
 
       return c.json({
-        res:"Blog Created!"
+        res:"Blog Created!",
+        id:post.id
       })
     } catch(e) {
       console.error("Error creating blog post:", e);
@@ -127,6 +158,8 @@ blogRouter.get('/:id',async(c)=>{
       result:userPost
     })
 })
+
+
 
 //updating a user blog
 blogRouter.put('/:id',async (c) => {

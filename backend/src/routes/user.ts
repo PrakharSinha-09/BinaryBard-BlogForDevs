@@ -40,8 +40,7 @@ userRouter.post('/signup',async (c) => {
     
       return c.text('User Registered Successfully!')
     } catch(e) {
-        console.log('error');
-      return c.status(403);
+      return c.text("Some Error Occured");
     }
 })
 
