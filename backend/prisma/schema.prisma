@@ -19,6 +19,10 @@ model User {
   email    String   @unique
   name     String?
   password String
+  bio      String?
+  twitter  String?
+  linkedin String?
+  github   String?
   posts    Post[]
 }
 

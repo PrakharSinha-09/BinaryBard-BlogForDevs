@@ -55,7 +55,8 @@ blogRouter.get('/:id',async(c)=>{
       id:blogId
     },
     select:{
-      author: { select: { name: true } },
+      author: { select: { name: true ,bio:true,
+        linkedin:true, twitter:true, github: true} },
       title: true,
       content: true,
       published: true,
@@ -137,7 +138,7 @@ blogRouter.post('/new',async (c) => {
 })
 
 //fetching user specific blogs
-blogRouter.get('/:id',async(c)=>{
+blogRouter.get('/user/:id',async(c)=>{
     const userId=c.req.param("id")
     const prisma = new PrismaClient({           //this from line 19-21, we have to write in every routes, because we cannot access the env variables from outside.. as everything we get is from this 'c' variable only.
       datasourceUrl: c.env?.DATABASE_URL,        
@@ -146,6 +147,15 @@ blogRouter.get('/:id',async(c)=>{
     const userPost=await prisma.post.findMany({
       where:{
         authorId:userId
+      },
+      select:{
+        author: { select: { name: true ,bio:true,
+          linkedin:true, twitter:true, github: true} },
+        title: true,
+        content: true,
+        published: true,
+        createdAt: true,
+        id:true
       }
     })
     
