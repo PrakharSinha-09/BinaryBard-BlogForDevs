@@ -3,25 +3,31 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
+import { Spinner } from "../components/Spinner";
 
 export const Publish = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [buttonDisable, setButtonDisable] = useState(false);
+
     const navigate = useNavigate();
 
     return <div>
         <Appbar />
-        <div className="flex justify-center w-full pt-8"> 
+        <div className="flex justify-center w-full h-screen pt-8 bg-gradient-to-r from-indigo-500 ..."> 
             <div className="max-w-screen-lg w-full">
                 <input onChange={(e) => {
                     setTitle(e.target.value)
-                }} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Title" />
+                }} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5" placeholder="Title" />
 
                 <TextEditor onChange={(e) => {
                     setDescription(e.target.value)
                 }} />
 
                 <button onClick={async () => {
+                    setIsLoading(true)
+                    setButtonDisable(true)
                     const response = await axios.post(`${BACKEND_URL}/api/v1/blog/new`, {
                         title,
                         content: description
@@ -30,12 +36,15 @@ export const Publish = () => {
                             Authorization: localStorage.getItem("token")
                         }
                     });
-                    // console.log(response);
-                    // console.log(response.data);
+                    setIsLoading(false)
+                    setButtonDisable(false)
+                   
                     
                     navigate(`/blog/${response.data.id}`)
-                }} type="submit" className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                    Publish post
+                }} type="submit" disabled={buttonDisable} className="text-center mt-4 w-32 inline-flex px-5 py-2.5 text-sm font-medium text-white bg-blue-700 rounded-lg focus:ring-4 focus:outline-none hover:bg-blue-800">
+                    {isLoading ? <Spinner /> : (
+                        <span>Publish Blog</span>
+                    )}
                 </button>
             </div>
         </div>
