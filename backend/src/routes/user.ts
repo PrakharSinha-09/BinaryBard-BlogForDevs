@@ -182,6 +182,26 @@ userRouter.post('/update',async(c)=>{
   })
 })
 
+userRouter.delete('/delete',async(c)=>{
+  const userId=await c.get('userId');
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,        
+  }).$extends(withAccelerate())
+
+
+  await prisma.user.delete({
+    where:{
+      id:userId
+    }})
+
+  return c.json({
+    status:"success",
+    msg:"Account Deleted Successfully!"
+  })
+})
+
+
 userRouter.get('/all',async (c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env?.DATABASE_URL,        
