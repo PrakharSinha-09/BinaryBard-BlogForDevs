@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,ChangeEvent, FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BACKEND_URL } from '../config';
 import axios from 'axios';
@@ -32,25 +32,22 @@ const UpdateBlog = () => {
     }, [id]);
 
     useEffect(() => {
-        console.log('Updated blog:', blog);
     }, [blog]);
     
     useEffect(() => {
-        console.log('Updated formData:', formData);
     }, [formData]);
     
     useEffect(() => {
-        console.log('Updated title:', formData.title);
     }, [formData.title]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Submit updated blog data to the server
         axios.put(`${BACKEND_URL}/api/v1/blog/${id}`, formData, {
@@ -58,8 +55,7 @@ const UpdateBlog = () => {
                 Authorization: localStorage.getItem("token")
             }
         })
-        .then(response => {
-            console.log('Blog updated successfully:', response.data);
+        .then(() => {
             navigate(`/blogs/`)
         })
         .catch(error => {
@@ -88,7 +84,7 @@ const UpdateBlog = () => {
                         value={formData.content}
                         onChange={handleInputChange}
                         className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-                        rows="6"
+                        rows={6}
                     ></textarea>
                 </div>
                 <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md">Update Blog</button>

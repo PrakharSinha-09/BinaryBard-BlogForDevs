@@ -10,7 +10,7 @@ export const Appbar = () => {
     const { userInfo, setUserInfo } = useContext(UserContext);
     const [showDropdown, setShowDropdown] = useState(false);
     const [userDataFetched, setUserDataFetched] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export const Appbar = () => {
     }, [userDataFetched]);
 
     useEffect(() => {
-        const closeDropdown = (event) => {
+        const closeDropdown = (event:any) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setShowDropdown(false);
             }

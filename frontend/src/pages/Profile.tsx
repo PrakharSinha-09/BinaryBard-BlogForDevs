@@ -58,7 +58,7 @@ const Profile = () => {
         setIsModalOpen(false);
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUserInfo({
           ...userInfo,

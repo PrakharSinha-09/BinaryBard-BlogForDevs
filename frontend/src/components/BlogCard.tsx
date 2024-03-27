@@ -34,7 +34,7 @@ export const BlogCard=({
                     Authorization: localStorage.getItem("token")
                 }
             })
-            .then(response => {
+            .then(() => {
                 alert('Blog Deleted Successfully!')
                 navigate('/blogs')
             })

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, Dispatch, SetStateAction, ReactNode } from 'react';
+import { createContext, useState, Dispatch, SetStateAction, ReactNode } from 'react';
 
 export type User = {
   id: string;
@@ -25,7 +25,7 @@ const defaultState = {
     linkedin: '',
     github: ''
   },
-  setUserInfo: (userInfo: User) => {}
+  setUserInfo: () => {}
 } as UserContextInterface;
 
 export const UserContext = createContext(defaultState); // Default initial state

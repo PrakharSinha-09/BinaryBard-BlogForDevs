@@ -3,8 +3,9 @@ import { motion } from 'framer-motion'; // Import motion from Framer Motion
 import { Appbar } from "./Appbar";
 import { Avatar } from "./BlogCard";
 import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
+import { Blog } from '../hooks';
 
-export const FullBlog = ({ blog }) => {
+export const FullBlog = ({ blog }:{blog:Blog}) => {
     const createdAt = new Date(blog.createdAt);
     // Formatting the date
     const formattedDate = `${createdAt.getDate()} ${createdAt.toLocaleString('default', { month: 'long' })} ${createdAt.getFullYear()} ${createdAt.toLocaleTimeString()}`;

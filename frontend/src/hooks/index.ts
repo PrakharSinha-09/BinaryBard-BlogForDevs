@@ -2,10 +2,23 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
+export interface Blog {
+    "content": string;
+    "title": string;
+    "id": number
+    "author": {
+        "name"?: string;
+        "bio"?: string;
+        "linkedin"?: string;
+        "twitter"?: string;
+        "github" ?: string;
+    };
+    "createdAt":Date;
+}
 
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
-    const [blog, setBlog] = useState();
+    const [blog, setBlog] = useState<Blog>();
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
@@ -26,7 +39,7 @@ export const useBlog = ({ id }: { id: string }) => {
 
 }
 
-export const useBlogs = (page,pageSize) => {
+export const useBlogs = (page:number,pageSize:number) => {
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]); 
     const [totalPages, setTotalPages] = useState(1);
@@ -53,9 +66,7 @@ export const useBlogs = (page,pageSize) => {
 
 export const useMyBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
-    const [blogs, setBlogs] = useState([{
-        
-    }]);
+    const [blogs, setBlogs] = useState([]);
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/user/${id}`, {

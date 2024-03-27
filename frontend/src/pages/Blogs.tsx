@@ -6,11 +6,19 @@ import { useBlogs } from '../hooks';
 import { Skeleton } from '../components/Skeleton';
 import { useNavigate } from 'react-router-dom';
 
+interface Blog {
+    id: string;
+    author: {
+      name: string;
+    };
+    title: string;
+    content: string;
+    createdAt: string;
+  }
 const Blogs = () => {
     const navigate=useNavigate()
     const [page, setPage] = useState(1); // State to track current page
     const { loading, blogs,totalPages } = useBlogs(page,10);
-    console.log(totalPages);
     
     // State to track the scroll position
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -73,7 +81,7 @@ const Blogs = () => {
                             <Skeleton />
                         </div>
                     ) : (
-                        blogs.map((blog) => (
+                        blogs.map((blog:Blog) => (
                             <BlogCard
                                 key={blog.id}
                                 authorName={blog.author.name || "Anonymous"}

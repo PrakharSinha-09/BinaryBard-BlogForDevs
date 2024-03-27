@@ -6,9 +6,19 @@ import { useMyBlog } from '../hooks';
 import { Skeleton } from '../components/Skeleton';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+interface Blog {
+    id: string;
+    author: {
+      name: string;
+    };
+    title: string;
+    content: string;
+    createdAt: string;
+  }
+
 const Blogs = () => {
     const { id } = useParams();
-    const { loading, blogs } = useMyBlog({ id: id });
+    const { loading, blogs } = useMyBlog({ id: id || "" });
 
     const navigate=useNavigate()
     const token=localStorage.getItem('token')
@@ -91,7 +101,7 @@ const Blogs = () => {
             />
             <div className='flex justify-center bg-gradient-to-r from-indigo-500 ... '>
                 <div>
-                    {blogs.map((blog) => (
+                    {blogs.map((blog: Blog) => (
                         <BlogCard
                             key={blog.id}
                             authorName={blog.author.name || "Anonymous"}
