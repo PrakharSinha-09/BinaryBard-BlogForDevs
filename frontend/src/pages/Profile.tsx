@@ -102,7 +102,7 @@ export const Profile = () => {
                     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center mr-4">
                         {/* Avatar and Name */}
                         <div className="flex items-center justify-center bg-gray-200 w-24 h-24 rounded-full text-4xl text-gray-600 mb-4">
-                            {userInfo?.name || "A"}
+                            {userInfo?.name[0] || "A"}
                         </div>
                         {/* Name and Email */}
                         <div className="text-center">
