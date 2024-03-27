@@ -38,7 +38,7 @@ export const FullBlog = ({ blog }) => {
                 transition={{ duration: 0.1 }}
                 className="bg-red-500 h-2 fixed top-0 left-0 z-50"
             />
-            <div className="flex justify-center md:h-screen bg-gradient-to-r from-gray-300 ...">
+            <div className="flex justify-center bg-gradient-to-r from-gray-300 ...">
                 <div className="grid grid-cols-12 px-4 md:px-10 w-full max-w-screen-xl pt-12">
                     <div className="col-span-12 md:col-span-8">
                         <div className="text-5xl font-extrabold break-words">

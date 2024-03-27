@@ -89,7 +89,7 @@ const Blogs = () => {
                 transition={{ duration: 0.1 }} // Animation duration
                 className="bg-red-500 h-2 fixed top-0 left-0 z-50" // Styling for the progress bar
             />
-            <div className='flex h-screen justify-center bg-gradient-to-r from-indigo-500 ... '>
+            <div className='flex justify-center bg-gradient-to-r from-indigo-500 ... '>
                 <div>
                     {blogs.map((blog) => (
                         <BlogCard

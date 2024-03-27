@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
 import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { Skeleton } from "../components/Skeleton";
 
 
 const Profile = () => {
@@ -22,6 +23,7 @@ const Profile = () => {
    
     
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading,setLoading]=useState(true)
    
     const navigate = useNavigate();
 
@@ -34,6 +36,7 @@ const Profile = () => {
                     }
                 });
                 setUserInfo({...response.data.user});
+                setLoading(false)
                 // console.log(userInfo);
                 
             } catch (error) {
@@ -63,7 +66,26 @@ const Profile = () => {
           [name]: value
         });
       };
+
+    const handleDeleteUser=async()=>{
+        try {
+            // Make the delete API call
+            await axios.delete(`${BACKEND_URL}/api/v1/user/delete`, {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            });
+            
+            alert('Account Deleted Successfully!')
+            navigate('/signup');
     
+        } catch (error) {
+            // Handle error (e.g., show error message)
+            console.error("Error deleting user:", error);
+            // You can display an error message to the user or handle the error in any other way
+        }
+    }
+
     const handleSaveProfile = async () => {
         // Perform save logic here
         try {
@@ -97,7 +119,7 @@ const Profile = () => {
             <Appbar />
             <div className={`flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-500 ... ${isModalOpen ? 'backdrop-blur-lg pointer-events-none' : ''}`}>
                 <h2 className="text-2xl font-dancing font-bold mb-5">User Profile</h2>
-                <div className="flex items-center justify-center mb-4">
+                {!loading ? (<div className="flex items-center justify-center mb-4">
                     {/* Profile Information */}
                     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center mr-4">
                         {/* Avatar and Name */}
@@ -141,15 +163,25 @@ const Profile = () => {
                         <p className="text-gray-600">{userInfo?.bio || "Hey There!"}</p>
                     </div>
                 </div>
-                {/* Update Profile Button */}
-                {!isModalOpen && (
-                    <button 
-                        disabled={isModalOpen} 
-                        onClick={handleOpenModal} 
-                        className={`bg-${isModalOpen ? 'gray-300' : 'blue-500'} ${isModalOpen ? '' : 'hover:bg-blue-700'} text-white font-bold py-2 px-4 rounded`}
-                    >
-                        Update Profile
-                    </button>
+                ):(
+                    <Skeleton />
+                )}
+                {!isModalOpen && !loading && (
+                    <div>
+                        <button 
+                            disabled={isModalOpen} 
+                            onClick={handleOpenModal} 
+                            className={`bg-${isModalOpen ? 'gray-300' : 'blue-500'} ${isModalOpen ? '' : 'hover:bg-blue-700'} text-white font-bold py-2 px-4 rounded`}
+                        >
+                            Update Profile
+                        </button>
+                        <button 
+                        onClick={handleDeleteUser} 
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4"
+                        >
+                        Delete User
+                        </button>
+                    </div>
                 )}
                 {/* Modal for Updating Profile */}
                 <Modal
