@@ -21,6 +21,17 @@ blogRouter.get('/bulk',async(c)=>{
     }).$extends(withAccelerate())
 
     try {
+      const page = parseInt(c.req.query('page')) || 1// Default to page 1
+      const pageSize=parseInt(c.req.query('pageSize')) || 10
+
+      console.log(page,pageSize);
+      
+      const skip = (page - 1) * pageSize;
+
+      const totalBlogs=await prisma.post.findMany({
+        where: { published: true }
+      })
+
       const posts = await prisma.post.findMany({
           where: { published: true },
           
@@ -31,11 +42,14 @@ blogRouter.get('/bulk',async(c)=>{
               published: true,
               createdAt: true,
               id:true
-          }
+          },
+          skip:skip,
+          take:pageSize
       });
 
       return c.json({
-          result: posts
+          result: posts,
+          totalBlogs:totalBlogs.length
       });
   } catch (error) {
       console.error("Error fetching blog posts:", error);
