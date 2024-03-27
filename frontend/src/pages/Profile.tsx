@@ -7,7 +7,7 @@ import { Appbar } from "../components/Appbar";
 import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 
-export const Profile = () => {
+const Profile = () => {
     
     const [userInfo,setUserInfo]=useState({
         id: '',
@@ -208,3 +208,4 @@ export const Profile = () => {
     );
 }    
 
+export default Profile

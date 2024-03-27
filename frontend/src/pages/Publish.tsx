@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { Spinner } from "../components/Spinner";
 
-export const Publish = () => {
+const Publish = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -64,3 +64,5 @@ function TextEditor({ onChange }: {onChange: (e: ChangeEvent<HTMLTextAreaElement
        </div>
     </div>
 }
+
+export default Publish
