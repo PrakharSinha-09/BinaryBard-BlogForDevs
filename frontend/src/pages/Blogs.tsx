@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion'; // Import motion from Framer Motion
+import { motion } from 'framer-motion';
 import { BlogCard } from '../components/BlogCard';
 import { Appbar } from '../components/Appbar';
 import { useBlogs } from '../hooks';
@@ -54,11 +54,11 @@ const Blogs = () => {
     return (
         <div>
             <Appbar />
-            <motion.div // Use motion.div for Framer Motion animation
-                initial={{ width: 0 }} // Initial width of the progress bar
-                animate={{ width: scrollProgress + '%' }} // Animation to make it progress based on scroll
-                transition={{ duration: 0.1 }} // Animation duration
-                className="bg-red-500 h-2 fixed top-0 left-0 z-50" // Styling for the progress bar
+            <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: scrollProgress + '%' }}
+                transition={{ duration: 0.1 }}
+                className="bg-red-500 h-2 fixed top-0 left-0 z-50"
             />
             <div className='flex justify-center bg-gradient-to-r from-indigo-500 ...'>
                 <div>

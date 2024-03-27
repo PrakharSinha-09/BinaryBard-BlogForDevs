@@ -2,15 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { lazy,Suspense } from "react"
 import { Spinner } from './components/Spinner'
 
-// import Signup from './pages/Signup'
-// import Signin from './pages/Signin'
-// import Blog from './pages/Blog'
-// import Blogs from './pages/Blogs'
-// import MyBlogs from './pages/MyBlogs'
-// import UpdateBlog from './pages/UpdateBlog'
-// import Publish from './pages/Publish';
-// import Profile from './pages/Profile';
-
 const Signin=lazy(()=> import('./pages/Signin'))
 const Signup=lazy(()=> import('./pages/Signup'))
 const Blog=lazy(()=> import('./pages/Blog'))
@@ -20,11 +11,7 @@ const UpdateBlog=lazy(()=> import('./pages/UpdateBlog'))
 const Publish=lazy(()=> import('./pages/Publish'))
 const Profile=lazy(()=> import('./pages/Profile'))
 
-
-
 function App() {
-
-  
 
   return (
     <>

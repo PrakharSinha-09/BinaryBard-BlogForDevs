@@ -37,7 +37,6 @@ const Profile = () => {
                 });
                 setUserInfo({...response.data.user});
                 setLoading(false)
-                // console.log(userInfo);
                 
             } catch (error) {
                 console.error("Error fetching user information:", error);
@@ -69,7 +68,6 @@ const Profile = () => {
 
     const handleDeleteUser=async()=>{
         try {
-            // Make the delete API call
             await axios.delete(`${BACKEND_URL}/api/v1/user/delete`, {
                 headers: {
                     Authorization: localStorage.getItem("token")
@@ -80,14 +78,11 @@ const Profile = () => {
             navigate('/signup');
     
         } catch (error) {
-            // Handle error (e.g., show error message)
             console.error("Error deleting user:", error);
-            // You can display an error message to the user or handle the error in any other way
         }
     }
 
     const handleSaveProfile = async () => {
-        // Perform save logic here
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/update`, {
                 name:userInfo.name,
@@ -102,7 +97,6 @@ const Profile = () => {
                     Authorization: localStorage.getItem('token')
                 }
             });
-            // Update local user info after successful update
             setUserInfo(response.data.user);
             navigate('/profile');
             window.location.reload();
@@ -120,17 +114,13 @@ const Profile = () => {
             <div className={`flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-500 ... ${isModalOpen ? 'backdrop-blur-lg pointer-events-none' : ''}`}>
                 <h2 className="text-2xl font-dancing font-bold mb-5">User Profile</h2>
                 {!loading ? (<div className="flex items-center justify-center mb-4">
-                    {/* Profile Information */}
                     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center mr-4">
-                        {/* Avatar and Name */}
                         <div className="flex items-center justify-center bg-gray-200 w-24 h-24 rounded-full text-4xl text-gray-600 mb-4">
                             {userInfo?.name[0] || "A"}
                         </div>
-                        {/* Name and Email */}
                         <div className="text-center">
                             <h2 className="text-lg font-semibold text-gray-800">Name : {userInfo?.name || "Anonymous"}</h2>
                             <p className="text-gray-600 cursor-pointer font-semibold" onClick={handleClickEmail}>Email : {userInfo.email}</p>
-                            {/* Social Icons */}
                             <div className="flex justify-center mt-4">
                                 {
                                     userInfo.twitter && (
