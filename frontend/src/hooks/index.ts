@@ -26,21 +26,28 @@ export const useBlog = ({ id }: { id: string }) => {
 
 }
 
-export const useBlogs = () => {
+export const useBlogs = (page,pageSize) => {
     const [loading, setLoading] = useState(true);
-    const [blogs, setBlogs] = useState([]);
-
+    const [blogs, setBlogs] = useState([]); 
+    const [totalPages, setTotalPages] = useState(1);
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`)
+        setLoading(true); // Set loading to true when fetching new data
+        axios.get(`${BACKEND_URL}/api/v1/blog/bulk?page=${page}&pageSize=${pageSize}`)
             .then(response => {
-                setBlogs(response.data.result);
+                setBlogs(response.data.result)                
+                setTotalPages(Math.ceil(response.data.totalBlogs / pageSize));
                 setLoading(false);
             })
-    }, [])
+            .catch(error => {
+                console.error('Error fetching blogs:', error);
+                setLoading(false); // Set loading to false even if there's an error
+            });
+    }, [page, pageSize]);
 
     return {
         loading,
-        blogs
+        blogs,
+        totalPages
     }
 }
 

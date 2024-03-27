@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion'; // Import motion from Framer Motion
-import { BACKEND_URL } from '../config';
 import { BlogCard } from '../components/BlogCard';
 import { Appbar } from '../components/Appbar';
 import { useBlogs } from '../hooks';
@@ -9,17 +7,32 @@ import { Skeleton } from '../components/Skeleton';
 import { useNavigate } from 'react-router-dom';
 
 const Blogs = () => {
-    const { loading, blogs } = useBlogs();
-    console.log(blogs);
-
+    const navigate=useNavigate()
+    const [page, setPage] = useState(1); // State to track current page
+    const { loading, blogs,totalPages } = useBlogs(page,10);
+    console.log(totalPages);
+    
     // State to track the scroll position
     const [scrollProgress, setScrollProgress] = useState(0);
-    const navigate=useNavigate()
 
     const token=localStorage.getItem('token')
     if(!token){
         navigate('/signup')
     }
+
+    // Function to handle next page
+    const nextPage = () => {
+        setPage(page + 1);   
+        window.scrollTo({ top: 0, behavior: 'smooth' });     
+    };
+
+    // Function to handle previous page
+    const prevPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
     useEffect(() => {
         // Event listener to track scroll position
@@ -74,6 +87,19 @@ const Blogs = () => {
                     )}
                 </div>
             </div>
+            {/* Pagination buttons */}
+            <div className="flex justify-center mt-4">
+                <button onClick={prevPage} className="bg-gray-300 mb-2 font-semibold hover:bg-gray-400 text-gray-700 px-4 py-2 mr-2 rounded-md focus:outline-none" disabled={page === 1}>
+                    Previous
+                </button>
+                <span className="text-gray-700">
+                    Page {page} of {totalPages}
+                </span>
+                <button onClick={nextPage} className="bg-gray-300 mb-2 font-semibold hover:bg-gray-400 text-gray-700 px-4 py-2 ml-2 rounded-md focus:outline-none" disabled={page === totalPages}>
+                    Next
+                </button>
+            </div>
+
         </div>
     );
 };
