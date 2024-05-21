@@ -109,7 +109,7 @@ const TextEditor = forwardRef<HTMLDivElement, TextEditorProps>((props, ref) => {
     const { onChange } = props;
 
     const applyStyle = (command: string) => {
-        document.execCommand(command, false, null);
+        document.execCommand(command, false, '');
     };
 
     return (
@@ -121,7 +121,9 @@ const TextEditor = forwardRef<HTMLDivElement, TextEditorProps>((props, ref) => {
                     <button type="button" onClick={() => applyStyle('underline')} className="px-2 py-1 border rounded-lg mr-1 hover:bg-gray-200">Underline</button>
                     <button type="button" onClick={() => applyStyle('strikeThrough')} className="px-2 py-1 border rounded-lg mr-1 hover:bg-gray-200">Strikethrough</button>
                 </div>
-                <div className="my-2 bg-white rounded-lg w-full border p-2" contentEditable={true} ref={ref} onInput={onChange} style={{ minHeight: '200px' }} placeholder="Write an article..."></div>
+                <div className="my-2 bg-white rounded-lg w-full border p-2" contentEditable={true} ref={ref as React.MutableRefObject<HTMLDivElement>} onInput={onChange} style={{ minHeight: '200px' }}>
+                    
+                </div>
             </div>
         </div>
     );

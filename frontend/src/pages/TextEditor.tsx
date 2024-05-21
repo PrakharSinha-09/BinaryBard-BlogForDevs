@@ -24,10 +24,14 @@ const TextEditor: React.FC<TextEditorProps> = ({ content, onContentChange }) => 
 
             setTimeout(() => {
                 if (range && selection) {
-                    range.setStart(editorRef.current?.childNodes[0], cursorPosition || 0);
-                    range.collapse(true);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
+                    const firstChild = editorRef.current?.childNodes[0];
+                    if (firstChild) {
+                        range.setStart(firstChild, cursorPosition || 0);
+                        range.collapse(true);
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+
+                    }
                 }
             }, 0);
         }

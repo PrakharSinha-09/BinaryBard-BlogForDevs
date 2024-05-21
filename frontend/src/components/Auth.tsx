@@ -24,10 +24,6 @@ export const Auth = ({type}:{type:"signup" | "signin"}) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [buttonDisabled,setButtonDisabled]=useState(false)
-
-    const showToastMessage = () => {
-        
-      };
       
     async function sendRequest() {
         setIsLoading(true);
@@ -36,7 +32,7 @@ export const Auth = ({type}:{type:"signup" | "signin"}) => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, signupInput);
             if(type==='signin')
             {
-                let token=response.data.token
+                const token=response.data.token
                 localStorage.setItem('token',token) 
                 toast.success('🚀 Login Successful!', {
                     position: "bottom-center",
