@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface BlogCardProps{
     authorName:string,
@@ -35,7 +37,16 @@ export const BlogCard=({
                 }
             })
             .then(() => {
-                alert('Blog Deleted Successfully!')
+                toast.success("🚀 Blog Deleted Successfully!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    })
                 navigate('/blogs')
             })
             .catch(error => {
@@ -59,9 +70,7 @@ export const BlogCard=({
                     <div className="text-xl font-semibold pt-2">
                         {title}
                     </div>
-                    <div className="text-md font-thin">
-                        {content.slice(0, 100) + "..."}
-                    </div>
+                    <div className="text-md font-thin" dangerouslySetInnerHTML={{ __html: content.slice(0, 100) + "..." }}></div>
                     <div className="text-sm font-semibold pt-4 text-green-800">
                         {`${Math.ceil(content.length / 238)} minute(s) read`}
                     </div>

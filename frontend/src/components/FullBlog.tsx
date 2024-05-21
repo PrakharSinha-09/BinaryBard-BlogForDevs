@@ -5,7 +5,7 @@ import { Avatar } from "./BlogCard";
 import { FaLinkedin, FaTwitter, FaGithub } from 'react-icons/fa';
 import { Blog } from '../hooks';
 
-export const FullBlog = ({ blog }:{blog:Blog}) => {
+export const FullBlog = ({ blog }: { blog: Blog }) => {
     const createdAt = new Date(blog.createdAt);
     // Formatting the date
     const formattedDate = `${createdAt.getDate()} ${createdAt.toLocaleString('default', { month: 'long' })} ${createdAt.getFullYear()} ${createdAt.toLocaleTimeString()}`;
@@ -33,8 +33,8 @@ export const FullBlog = ({ blog }:{blog:Blog}) => {
     return (
         <div>
             <Appbar />
-            <motion.div 
-                initial={{ width: 0 }} 
+            <motion.div
+                initial={{ width: 0 }}
                 animate={{ width: scrollProgress + '%' }}
                 transition={{ duration: 0.1 }}
                 className="bg-red-500 h-2 fixed top-0 left-0 z-50"
@@ -48,9 +48,7 @@ export const FullBlog = ({ blog }:{blog:Blog}) => {
                         <div className="text-slate-500 pt-2">
                             Post on {formattedDate}
                         </div>
-                        <div className="pt-4">
-                            {blog.content}
-                        </div>
+                        <div className="pt-4" dangerouslySetInnerHTML={{ __html: blog.content }}></div>
                     </div>
                     <div className="col-span-12 md:col-span-4 mt-8 md:mt-0 ml-10">
                         <div className="text-slate-600 text-lg">
